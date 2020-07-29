@@ -1,5 +1,5 @@
 # AutoPackage
-一键乐固加固+签名+美团多渠道打包
+一键乐固加固+签名+walle多渠道打包
 
 第一步：拷贝根目录下的legu文件到自己的项目根目录
 
@@ -8,6 +8,12 @@
 第三步：app下的builde.gradle顶部添加 
  
      apply from: 'release.gradle'
+     
+     dependencies {
+         .....
+         //walle多渠道
+        implementation 'com.meituan.android.walle:library:1.1.7'
+    }
 
 第四步：app下的bulide.gradle添加命名规则
            
