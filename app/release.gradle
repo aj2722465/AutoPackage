@@ -3,13 +3,13 @@ import java.util.zip.ZipOutputStream
 
 ext {
     BASE = "legu/"
-    JAR = rootDir.getPath() + "/legu/libs/ms-shield.jar"
-    SIGN_JAR = rootDir.getPath() + "/legu/libs/apksigner.jar"
-    WALLE_JAR = rootDir.getPath() + "/legu/libs/walle-cli-all.jar"
+    JAR = rootDir.getPath() + "/legu/ms-shield.jar"
+    SIGN_JAR = rootDir.getPath() + "/legu/apksigner.jar"
+    WALLE_JAR = rootDir.getPath() + "/legu/walle-cli-all.jar"
 
     NAME = "AKIDPbV8qmDuaMSHpEhSpvRbV8UZ9ze2s31q"//腾讯乐固AppId
     PASSWORD = "g5HH1VfX9XeXwCFG0nrrEdrwCF4ez4uS"//腾讯乐固AppKey
-    KEY_PATH =rootDir.getPath() +  "/jenkinsBuild/ETCloud.jks" //密钥路径
+    KEY_PATH ="${KEY_PATH}" //密钥路径
     KEY_PASSWORD = "${KEY_PASS}" //密钥密码
     ALIAS = "${ALIAS_NAME}" //密钥别名
     ALIAS_PASSWORD =  "${ALIAS_PASS}"//别名密码

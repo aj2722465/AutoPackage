@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply from: 'release.gradle'
+
 //系统时间
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
@@ -41,25 +43,23 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
-            //bugly是否是debug模式
-            buildConfigField "boolean", "IS_DEBUG", "true"
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         release {
             minifyEnabled true
             zipAlignEnabled true
+
             shrinkResources true
-            //bugly是否是debug模式
-            buildConfigField "boolean", "IS_DEBUG", "false"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
             //打包命名规则
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
                     outputFileName = "atuo-v${variant.versionName}-${productFlavors[0].name}_${releaseTime()}.apk"
                 }
             }
+
         }
     }
 }
@@ -71,4 +71,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // 友盟统计SDK
+    implementation  'com.umeng.umsdk:common:9.1.0' // (必选)
+    implementation  'com.umeng.umsdk:game:9.1.0+G' // 游戏统计SDK依赖(可选)
+    implementation  'com.umeng.umsdk:asms:1.1.3' // asms包依赖(必选)
+    implementation 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
+    implementation 'com.umeng.umsdk:utdid:1.5.2'
+
+    //walle多渠道
+    implementation 'com.meituan.android.walle:library:1.1.7'
 }
