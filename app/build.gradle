@@ -1,15 +1,19 @@
 apply plugin: 'com.android.application'
+//系统时间
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.phjt.autopackage"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        flavorDimensions "versionCode"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,6 +27,41 @@ android {
     productFlavors {
         product{}
     }
+    //签名文件
+    signingConfigs {
+        release {
+            keyAlias ALIAS_NAME
+            keyPassword KEY_PASS
+            storeFile file(KEY_PATH)
+            storePassword ALIAS_PASS
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            //bugly是否是debug模式
+            buildConfigField "boolean", "IS_DEBUG", "true"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            //bugly是否是debug模式
+            buildConfigField "boolean", "IS_DEBUG", "false"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            //打包命名规则
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "atuo-v${variant.versionName}-${productFlavors[0].name}_${releaseTime()}.apk"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -32,5 +71,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.github.User:Repo:Tag'
 }
