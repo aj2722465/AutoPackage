@@ -31,4 +31,16 @@
 
     gradlew clean  
     gradlew assemblePackageChannel
+    
+最终生成加固签名的渠道包路径：
+
+    //多渠道安装包路径
+    app/build/outputs/release/channels
+    //压缩包路径
+    app/build/phjt-channels.zip
+    
+    
+#联系方式
+email: ajsxmx@163.com
+
       
