@@ -5,7 +5,9 @@
 
 第二步：拷贝app下的release.gradle文件到自己项目的modle
 
-第三步：app下的builde.gradle顶部添加 apply from: 'release.gradle'
+第三步：app下的builde.gradle顶部添加 
+ 
+     apply from: 'release.gradle'
 
 第四步：app下的bulide.gradle添加命名规则
            
@@ -24,5 +26,8 @@ KEY_PATH=../app/autoPackage.jks
 
 第六步：配置app下的channel文件 填写要打的渠道信息
 
-最后执行 gradlew assemblePackageChannel 命令
+#打包命令
+
+gradlew clean  
+gradlew assemblePackageChannel
       
