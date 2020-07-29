@@ -11,23 +11,24 @@
 
 第四步：app下的bulide.gradle添加命名规则
            
-           android.applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "atuo-v${variant.versionName}-${productFlavors[0].name}_${releaseTime()}.apk"
-                }
-            }
+     android.applicationVariants.all { variant ->
+          variant.outputs.all {
+              outputFileName = "atuo-v${variant.versionName}-${productFlavors[0].name}_${releaseTime()}.apk"
+          }
+     }
 
 第五步：根据自己的项目配置gradle.properties
-ALIAS_NAME=autoPackage
-ALIAS_PASS=asdf1234
-KEY_MODULE_PATH=../../app/autoPackage.jks
-KEY_PASS=asdf1234
-KEY_PATH=../app/autoPackage.jks
+
+    ALIAS_NAME=autoPackage
+    ALIAS_PASS=asdf1234
+    KEY_MODULE_PATH=../../app/autoPackage.jks
+    KEY_PASS=asdf1234
+    KEY_PATH=../app/autoPackage.jks
 
 第六步：配置app下的channel文件 填写要打的渠道信息
 
 #打包命令
 
-gradlew clean  
-gradlew assemblePackageChannel
+    gradlew clean  
+    gradlew assemblePackageChannel
       
