@@ -12,7 +12,7 @@
 
 第二步：拷贝app下的release.gradle文件到自己项目的modle
 
-第三步：app下的builde.gradle顶部添加 
+第三步：app下的builde.gradle添加： 
  
      apply from: 'release.gradle'
      
