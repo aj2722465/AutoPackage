@@ -90,12 +90,12 @@ def zipalignApk(File output) {
         }
         println leguApk.getAbsolutePath()
         exec {
-//            java -jar apksigner.jar sign  --ks key.jks  --ks-key-alias releasekey  --ks-pass pass:pp123456  --key-pass pass:pp123456  --out output.apk  input.apk
             if (isWindows()) {
                 commandLine "powershell", rootDir.getPath() + "/legu/zipalign", "-v", "-p", "4", leguApk.getPath(), zipalign.getPath() + "/" + leguApk.getName()
             } else {
-                commandLine "/opt/android-sdk-linux/build-tools/27.0.3/zipalign", "-v", "-p", "4", leguApk.getPath(), zipalign.getPath() + "/" + leguApk.getName()
-            }
+                //替换zipalign路径： find ~/Library/Android/sdk/build-tools -name "zipalign"
+                commandLine "${android.sdkDirectory}/build-tools/28.0.3/zipalign", "-v", "-p", "4", leguApk.getPath(), zipalign.getPath() + "/" + leguApk.getName()
+         }
 
         }
         println "*************** zipalign optimize  finish***************"
@@ -260,7 +260,12 @@ def buildChannelApks() {
         channelsPath.mkdir()
     }
     exec {
-        commandLine "powershell", "java -jar", WALLE_JAR + " batch -f ", CHANNEL_CONFIG, reinforce_apk_name, channel_apks_path
+        if (isWindows()) {
+            commandLine "powershell", "java -jar", WALLE_JAR + " batch -f ", CHANNEL_CONFIG, reinforce_apk_name, channel_apks_path
+        } else {
+            //commandLine "sh", "-c", "java -jar {walle-cli-all.jar文件路径} batch -f {渠道文件路径} {要加渠道的apk文件路径} {渠道包的输出路径}"
+            commandLine "sh", "-c", "java -jar ${WALLE_JAR} batch -f ${CHANNEL_CONFIG} ${reinforce_apk_name} ${channel_apks_path}"
+        }
     }
     println('finish inject channels --> ' + channelsPath.getAbsolutePath())
     println('then end!')
